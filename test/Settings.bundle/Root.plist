@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>StringsTable</key>
+        <string>Root</string>
+        <key>PreferenceSpecifiers</key>
+        <array>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 1</string>
+                <key>Key</key>
+                <string>activite_0</string>
+                <key>DefaultValue</key>
+                <string>Restau</string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 2</string>
+                <key>Key</key>
+                <string>activite_1</string>
+                <key>DefaultValue</key>
+                <string>Ciné</string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 3</string>
+                <key>Key</key>
+                <string>activite_2</string>
+                <key>DefaultValue</key>
+                <string>Courses</string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 4</string>
+                <key>Key</key>
+                <string>activite_3</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 5</string>
+                <key>Key</key>
+                <string>activite_4</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 6</string>
+                <key>Key</key>
+                <string>activite_5</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 7</string>
+                <key>Key</key>
+                <string>activite_6</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activite 8</string>
+                <key>Key</key>
+                <string>activite_7</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activites 9</string>
+                <key>Key</key>
+                <string>activite_8</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Activites 10</string>
+                <key>Key</key>
+                <string>activite_9</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+        </array>
+    </dict>
+</plist>
