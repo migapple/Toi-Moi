@@ -92,9 +92,7 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     // returns the # of rows in each component..
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        print("Nbre d'activités: \(activite.count)")
-
-        return activite.count
+          return activite.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

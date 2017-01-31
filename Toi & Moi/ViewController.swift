@@ -25,6 +25,40 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
     }
     
+    @IBAction func trashButton(_ sender: UIBarButtonItem) {
+        
+        
+        cleanCoreData()
+        
+        let alertController:UIAlertController = UIAlertController(title: "Supression des données !", message: "Voulez-vous vraiment supprimer toutes les données ?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Non, annuler", style: .cancel) { action -> Void in
+            // don't do anything
+        }
+        
+        let nextAction = UIAlertAction(title: "Oui", style: .default) { action -> Void in
+            
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            
+            do {
+                self.tasks = try context.fetch(Activites.fetchRequest())
+            } catch {
+                print("Fetching Failed")
+            }
+            
+            self.maTableView.reloadData()
+            
+            self.miseAjourTotal()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(nextAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -45,7 +79,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             tasks = try context.fetch(Activites.fetchRequest())
             if tasks.count > 0 {
                 for i in 0 ... tasks.count-1 {
-                    print("\(tasks[i].date) \(tasks[i].nom) \(tasks[i].quoi) \(tasks[i].prix)")
+                    print("Lecture des données: \(tasks[i].date!) \(tasks[i].nom!) \(tasks[i].quoi!) \(tasks[i].prix)")
                 }
             }
         } catch {

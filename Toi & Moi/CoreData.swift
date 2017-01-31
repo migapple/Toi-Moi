@@ -33,3 +33,19 @@ func sauvegarde(objet:NSManagedObject, nom: String, date: String, quoi: String, 
 }
 
 
+///delete all the data in core data
+func cleanCoreData() {
+    
+    let fetchRequest:NSFetchRequest<Activites> = Activites.fetchRequest()
+    
+    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+    
+    do {
+        print("deleting all contents")
+        try context?.execute(deleteRequest)
+    }catch {
+        print(error.localizedDescription)
+    }
+    
+}
+
