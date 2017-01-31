@@ -79,8 +79,7 @@
 				53FAB8221E3497A80007ADCE /* Model.xcdatamodeld */,
 				53A12E841E3A32D40017EB6A /* Settings.bundle */,
 			);
-			name = "Toi & Moi";
-			path = test;
+			path = "Toi & Moi";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,7 +286,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4M6WBM2XB7;
-				INFOPLIST_FILE = test/Info.plist;
+				INFOPLIST_FILE = "Toi & Moi/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.michel.garlandat.Toi---Moi";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -300,7 +299,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4M6WBM2XB7;
-				INFOPLIST_FILE = test/Info.plist;
+				INFOPLIST_FILE = "Toi & Moi/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.michel.garlandat.Toi---Moi";
 				PRODUCT_NAME = "$(TARGET_NAME)";
