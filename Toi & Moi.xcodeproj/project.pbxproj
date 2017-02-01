@@ -17,6 +17,7 @@
 		53D483481E2F67760026B32C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53D483471E2F67760026B32C /* Assets.xcassets */; };
 		53D4834B1E2F67760026B32C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53D483491E2F67760026B32C /* LaunchScreen.storyboard */; };
 		53D483531E2F7E100026B32C /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D483521E2F7E100026B32C /* TableViewCell.swift */; };
+		53E817401E42426600D113E3 /* AideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E8173F1E42426600D113E3 /* AideViewController.swift */; };
 		53FAB8241E3497A80007ADCE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 53FAB8221E3497A80007ADCE /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		53D4834A1E2F67760026B32C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		53D4834C1E2F67760026B32C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53D483521E2F7E100026B32C /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		53E8173F1E42426600D113E3 /* AideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AideViewController.swift; sourceTree = "<group>"; };
 		53FAB8231E3497A80007ADCE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				53D483401E2F67760026B32C /* AppDelegate.swift */,
+				53E8173F1E42426600D113E3 /* AideViewController.swift */,
 				53D483421E2F67760026B32C /* ViewController.swift */,
 				539AD2FA1E2FD839008D3F67 /* AjoutViewController.swift */,
 				53D483521E2F7E100026B32C /* TableViewCell.swift */,
@@ -161,6 +164,7 @@
 				53D483411E2F67760026B32C /* AppDelegate.swift in Sources */,
 				53FAB8241E3497A80007ADCE /* Model.xcdatamodeld in Sources */,
 				53A12E891E3A66E50017EB6A /* StatsViewController.swift in Sources */,
+				53E817401E42426600D113E3 /* AideViewController.swift in Sources */,
 				53A781341E34891000080217 /* CoreData.swift in Sources */,
 				539AD2FB1E2FD839008D3F67 /* AjoutViewController.swift in Sources */,
 			);
