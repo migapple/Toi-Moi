@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 
+    var toi:String = ""
+    var moi:String = ""
+
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -70,7 +73,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         registerSettings()
-        NotificationCenter.default.addObserver(self, selector: #selector (ViewController.updateDisplayFromDefaults), name: UserDefaults.didChangeNotification, object: nil)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector (ViewController.updateDisplayFromDefaults), name: UserDefaults.didChangeNotification, object: nil)
+        
+        updateDisplayFromDefaults()
         
         // Core Data Récupération des données
         
@@ -198,7 +204,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
          let defaults = UserDefaults.standard
          
          //Set the controls to the default values.
-         
+        
+        if let activiteSetup = defaults.string(forKey: "moi_0") {
+            moi  = activiteSetup
+        } else {
+            moi   = ""
+        }
+        if let activiteSetup = defaults.string(forKey: "toi_0") {
+            toi  = activiteSetup
+        } else {
+            toi  = ""
+        }
+        
          if let activiteSetup = defaults.string(forKey: "activite_0") {
          activite[0]  = activiteSetup
          } else {

@@ -22,7 +22,7 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     var choix = "Restau"
     let datePicker = UIDatePicker()
     let dateFormatter = DateFormatter()
-    var qui = "Toi"
+    var qui = moi
     let numberFormatter = NumberFormatter()
     //var prixDouble:Double
 
@@ -35,9 +35,9 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         switch quiSegmentedControl.selectedSegmentIndex 
         {
         case 0:
-            qui = "Toi";
+            qui = moi;
         case 1:
-            qui = "Moi";
+            qui = toi;
         default:
             break; 
         }
@@ -69,6 +69,10 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        quiSegmentedControl.setTitle(moi, forSegmentAt: 0)
+        quiSegmentedControl.setTitle(toi, forSegmentAt: 1)
+        
         afficheDate()
         quoiTextField.text = choix
         // on donne la main à la vue sur activitePicker

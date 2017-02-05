@@ -8,6 +8,38 @@
         <array>
             <dict>
                 <key>Type</key>
+                <string>PSGroupSpecifier</string>
+                <key>Title</key>
+                <string>Utilisateurs</string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Moi</string>
+                <key>Key</key>
+                <string>moi_0</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSTextFieldSpecifier</string>
+                <key>Title</key>
+                <string>Toi</string>
+                <key>Key</key>
+                <string>toi_0</string>
+                <key>DefaultValue</key>
+                <string></string>
+            </dict>
+            <dict>
+                <key>Type</key>
+                <string>PSGroupSpecifier</string>
+                <key>Title</key>
+                <string>Activités</string>
+            </dict>
+            <dict>
+                <key>Type</key>
                 <string>PSTextFieldSpecifier</string>
                 <key>Title</key>
                 <string>Activite 1</string>
