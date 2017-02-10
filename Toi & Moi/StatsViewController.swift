@@ -1,6 +1,6 @@
 //
 //  StatsViewController.swift
-//  test
+//  Toi & Moi
 //
 //  Created by Michel Garlandat on 26/01/2017.
 //  Copyright © 2017 Michel Garlandat. All rights reserved.
@@ -10,8 +10,9 @@ import UIKit
 
 class StatsViewController: UIViewController {
     
-    var tasks : [Activites] = []
-    
+
+    @IBOutlet weak var toiLabel: UILabel!
+    @IBOutlet weak var moiLabel: UILabel!
     @IBOutlet weak var activite1Label: UILabel!
     @IBOutlet weak var activite2Label: UILabel!
     @IBOutlet weak var activite3Label: UILabel!
@@ -50,7 +51,8 @@ class StatsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        toiLabel.text = toi
+        moiLabel.text = moi
         activite1Label.text = activite[0]
         activite2Label.text = activite[1]
         activite3Label.text = activite[2]
@@ -72,231 +74,227 @@ class StatsViewController: UIViewController {
         var totalMoi:Double = 0
         var GtotalToi:Double = 0
         var GtotalMoi:Double = 0
-       
         
-        do {
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            tasks = try context.fetch(Activites.fetchRequest())
-            if tasks.count > 0 {
-                // Stats Toi
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[0] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
+            
+        if posts.count > 0 {
+            // Stats Toi
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[0] {
+                    print("Compare '\(posts[i].quoi)'  '\(activite[0])'")
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
                 }
-                if totalToi != 0 {
-                    tot1TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[1] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot2TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[2] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot3TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[3] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot4TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[4] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot5TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[5] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot6TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[6] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot7TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[7] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot8TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[8] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot9TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                totalToi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Toi" && tasks[i].quoi == activite[9] {
-                        totalToi += tasks[i].prix
-                        GtotalToi += totalToi
-                    }
-                }
-                if totalToi != 0 {
-                    tot10TLabel.text = NSString(format:"%.2f€", totalToi) as String
-                }
-                
-                // Stats Moi
-                
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[0] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-                    }
-                }
-                if totalMoi != 0 {
-                    tot1MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[1] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot2MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[2] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot3MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[3] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot4MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[4] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot5MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[5] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot6MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[6] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot7MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[7] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot8MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[8] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot9MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                totalMoi = 0
-                for i in 0..<tasks.count {
-                    if tasks[i].nom == "Moi" && tasks[i].quoi == activite[9] {
-                        totalMoi += tasks[i].prix
-                        GtotalMoi += totalMoi
-
-                    }
-                }
-                if totalMoi != 0 {
-                    tot10MLabel.text = NSString(format:"%.2f€", totalMoi) as String
-                }
-                
             }
-            GTotTLabel.text = NSString(format:"%.2f€", GtotalToi) as String
-            GTotMLabel.text = NSString(format:"%.2f€", GtotalMoi) as String
-
-        } catch {
-            print("Fetching Failed")
+            if totalToi != 0 {
+                tot1TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[1] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot2TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[2] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot3TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[3] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot4TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[4] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot5TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[5] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot6TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[6] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot7TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[7] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot8TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[8] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot9TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            totalToi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == toi && posts[i].quoi == activite[9] {
+                    totalToi += posts[i].prix
+                    GtotalToi += totalToi
+                }
+            }
+            if totalToi != 0 {
+                tot10TLabel.text = NSString(format:"%.2f€", totalToi) as String
+            }
+            
+            // Stats Moi
+            
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[0] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                }
+            }
+            if totalMoi != 0 {
+                tot1MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[1] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot2MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[2] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot3MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[3] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot4MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[4] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot5MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[5] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot6MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[6] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot7MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[7] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot8MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[8] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot9MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            totalMoi = 0
+            for i in 0..<posts.count {
+                if posts[i].nom == moi && posts[i].quoi == activite[9] {
+                    totalMoi += posts[i].prix
+                    GtotalMoi += totalMoi
+                    
+                }
+            }
+            if totalMoi != 0 {
+                tot10MLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            }
+            
         }
+        
+        GTotTLabel.text = NSString(format:"%.2f€", GtotalToi) as String
+        GTotMLabel.text = NSString(format:"%.2f€", GtotalMoi) as String
+        
     }
     
     

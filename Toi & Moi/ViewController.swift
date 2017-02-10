@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  test
+//  Toi & Moi
 //
 //  Created by Michel Garlandat on 18/01/2017.
 //  Copyright © 2017 Michel Garlandat. All rights reserved.
@@ -8,59 +8,42 @@
 
 import UIKit
 import CoreData
+import FirebaseDatabase
+import Firebase
 
-    var toi:String = ""
-    var moi:String = ""
+var toi:String = ""
+var moi:String = ""
+
+struct postStuct {
+    let nom:String
+    let date:String
+    let quoi:String
+    let prix:Double
+    let uniqueUserID:String
+}
+
+var ref:FIRDatabaseReference?
+var databaseHandle:FIRDatabaseHandle?
+
+var postData = [String:AnyObject]()
+var posts = [postStuct]()
+
+var prixToi: [Double] = []
+var prixMoi: [Double] = []
+var totalToi:Double = 0
+var totalMoi:Double = 0
+
 
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    var tasks : [Activites] = []
     
     @IBOutlet weak var nbToiLabel: UILabel!
     @IBOutlet weak var totToiLabel: UILabel!
     @IBOutlet weak var nbMoiLabel: UILabel!
     @IBOutlet weak var totMoiLabel: UILabel!
-    
+    @IBOutlet weak var toiTitre: UILabel!
+    @IBOutlet weak var moiTitre: UILabel!
     @IBOutlet weak var maTableView: UITableView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    @IBAction func trashButton(_ sender: UIBarButtonItem) {
-        
-        
-        cleanCoreData()
-        
-        let alertController:UIAlertController = UIAlertController(title: "Supression des données !", message: "Voulez-vous vraiment supprimer toutes les données ?", preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "Non, annuler", style: .cancel) { action -> Void in
-            // don't do anything
-        }
-        
-        let nextAction = UIAlertAction(title: "Oui", style: .default) { action -> Void in
-            
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            
-            do {
-                self.tasks = try context.fetch(Activites.fetchRequest())
-            } catch {
-                print("Fetching Failed")
-            }
-            
-            self.maTableView.reloadData()
-            
-            self.miseAjourTotal()
-        }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(nextAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-    }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -70,77 +53,130 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         func registerSettings() {
             let appDefaults = [String:AnyObject]()
             UserDefaults.standard.register(defaults: appDefaults)
+            UserDefaults.standard.synchronize()
         }
         
         registerSettings()
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector (ViewController.updateDisplayFromDefaults), name: UserDefaults.didChangeNotification, object: nil)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         updateDisplayFromDefaults()
         
-        // Core Data Récupération des données
+        FIRApp.configure()
+        let databaseRef = FIRDatabase.database().reference()
         
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        do {
-            tasks = try context.fetch(Activites.fetchRequest())
-            if tasks.count > 0 {
-                for i in 0 ... tasks.count-1 {
-                    print("Lecture des données: \(tasks[i].date!) \(tasks[i].nom!) \(tasks[i].quoi!) \(tasks[i].prix)")
-                }
-            }
-        } catch {
-            print("Fetching Failed")
+        //post()
+        
+        databaseRef.child("activite").queryOrderedByKey().observe(.childAdded, with: { (snapshot) in
+            
+            // on doit faire un cast de snapshot.value de Any to an NSDictionnary
+            let snapshotValue = snapshot.value as? NSDictionary
+            
+            let uniqueUserID = snapshot.key
+            let nom  = snapshotValue?["nom"] as? String
+            let date = snapshotValue?["date"] as? String
+            let quoi = snapshotValue?["quoi"] as? String
+            let prix = snapshotValue?["prix"] as? Double
+            
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+
+            
+            // posts.insert(postStuct(nom: nom!, date: date!, quoi: quoi!, prix: prix!,uniqueUserID: uniqueUserID), at: 0)
+             self.chargePosts(nom: nom!, date: date!, quoi: quoi!, prix: prix!, uniqueUserID: uniqueUserID)
+        })
+    }
+    
+    func chargePosts(nom: String, date: String, quoi: String, prix: Double, uniqueUserID: String) {
+        posts.insert(postStuct(nom: nom, date: date, quoi: quoi, prix: prix,uniqueUserID: uniqueUserID), at: 0)
+        
+        if (nom == toi) {
+            prixToi.insert(prix, at: 0)
         }
         
-        maTableView.reloadData()
-        
+        if (nom == moi) {
+            prixMoi.insert(prix, at: 0)
+        }
+
         miseAjourTotal()
+   }
+   
+    func post() {
+        
+        let nom = "MIG"
+        let date = "02/01/2017"
+        let quoi = "Courses"
+        let prix = 20.15
+        
+        let  post :[String: AnyObject] = ["nom": nom as AnyObject,"date":date as AnyObject,"quoi":quoi as AnyObject,"prix":prix as AnyObject]
+        
+        let databaseRef = FIRDatabase.database().reference()
+        
+        // post data
+        databaseRef.child("activite").childByAutoId().setValue(post)
+    }
+
+    
+    @IBAction func trashButton(_ sender: UIBarButtonItem) {
+        
+        
+        let alertController:UIAlertController = UIAlertController(title: "Supression des données !", message: "Voulez-vous vraiment supprimer toutes les données ?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Non, annuler", style: .cancel) { action -> Void in
+            // don't do anything
+        }
+        
+        let nextAction = UIAlertAction(title: "Oui", style: .default) { action -> Void in
+            let ref = FIRDatabase.database().reference()
+            ref.child("activite").removeValue()
+            posts.removeAll()
+            prixToi = []
+            prixMoi = []
+            
+            self.maTableView.reloadData()
+            self.miseAjourTotal()
+         }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(nextAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+        
     }
     
     func miseAjourTotal() {
-        var nbToi:Int = 0
-        var nbMoi:Int = 0
-        var totalToi:Double = 0
-        var totalMoi:Double = 0
-        //var i:Int = 0
-        //var j:Int = 0
         
-        do {
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            tasks = try context.fetch(Activites.fetchRequest())
-            if tasks.count > 0 {
-                for i in 0..<tasks.count {
-
-                    if tasks[i].nom == "Toi" {
-                        totalToi += tasks[i].prix
-                        nbToi += 1
-                    }
-                    
-                    if tasks[i].nom == "Moi" {
-                        totalMoi += tasks[i].prix
-                        nbMoi += 1
-                    }
-                }
-            }
-        } catch {
-            print("Fetching Failed")
+        // on filtre les TOI
+        let postToi = posts.filter { (postStuct:postStuct) -> Bool in
+            return postStuct.nom == toi
         }
 
-        let numberFormatter = NumberFormatter()
-        //numberFormatter.numberStyle = .currency
+        // on totalise les TOI
+        totalToi = postToi.reduce(0, {
+            return $0 + $1.prix
+        })
         
-        // numberFormatter.numberStyle = .decimal
-        numberFormatter.locale = Locale.current
-        numberFormatter.locale = Locale(identifier: "fr_FR")
+        // on filtre les MOI
+        let postMoi = posts.filter { (postStuct:postStuct) -> Bool in
+            return postStuct.nom == moi
+        }
         
-
-        nbToiLabel.text = "\(nbToi)"
+        // on totalise les TOI
+        totalMoi = postMoi.reduce(0, {
+            return $0 + $1.prix
+        })
+        
+        nbToiLabel.text = "\(postMoi.count)"
+        nbMoiLabel.text = "\(postToi.count)"
+     
         totToiLabel.text = NSString(format:"%.2f€", totalToi) as String
-        nbMoiLabel.text = "\(nbMoi)"
         totMoiLabel.text = NSString(format:"%.2f€", totalMoi) as String
+
+        self.maTableView.reloadData()
     }
-    
-    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -157,49 +193,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // Calcule le nombre de lignes à afficher
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+          return posts.count
     }
     
     // affiche la cellule
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:TableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
-        let task = tasks[indexPath.row]
-        cell.affiche(task: task)
+        //let task = tasks[indexPath.row]
+        let post = posts[indexPath.row]
+        print (post)
+//        cell.affiche(task: task)
+        cell.affiche2(post: post)
         return cell
     }
     
     // Suppression d'une ligne
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         if editingStyle == .delete {
-            let task = tasks[indexPath.row]
-            context.delete(task)
+            //on récupère l'uniqueID
+            let uniqueID = posts[indexPath.row].uniqueUserID
             
+            // on prend la référence de la base
+            let ref = FIRDatabase.database().reference()
             
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            // on suprime cette activité de uniqueID
+            ref.child("activite/\(uniqueID)").removeValue()
             
-            do {
-                tasks = try context.fetch(Activites.fetchRequest())
-            } catch {
-                print("Fetching Failed")
-            }
+            // Supprime l'élément du tableau
+            posts.remove(at: indexPath.row)
             
+            // on efface la ligne du tableau
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+
             miseAjourTotal()
             maTableView.reloadData()
-        }
     }
     
-    // MARK - Gestion Setup
-    
-    func registerSettingsBundle(){
-        let appDefaults = [String:AnyObject]()
-        UserDefaults.standard.register(defaults: appDefaults)
-        //NSUserDefaults.standardUserDefaults().synchronize()
-    }
     
     func updateDisplayFromDefaults(){
         
-
          //Get the defaults
          let defaults = UserDefaults.standard
          
@@ -215,6 +251,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } else {
             toi  = ""
         }
+        
+        toiTitre.text = toi
+        moiTitre.text = moi
         
          if let activiteSetup = defaults.string(forKey: "activite_0") {
          activite[0]  = activiteSetup
@@ -275,7 +314,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
          } else {
          activite[9]  = ""
          }
-         
     }
     
     func defaultsChanged(){

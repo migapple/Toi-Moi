@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  test
+//  Toi & Moi
 //
 //  Created by Michel Garlandat on 18/01/2017.
 //  Copyright © 2017 Michel Garlandat. All rights reserved.

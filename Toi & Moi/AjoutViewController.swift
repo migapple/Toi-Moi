@@ -1,6 +1,6 @@
 //
 //  AjoutViewController.swift
-//  test
+//  Toi & Moi
 //
 //  Created by Michel Garlandat on 18/01/2017.
 //  Copyright © 2017 Michel Garlandat. All rights reserved.
@@ -8,6 +8,9 @@
 
 import UIKit
 import CoreData
+import Firebase
+import FirebaseDatabase
+
 var activite = ["Restau", "Ciné","Courses","","","","","","",""]
 
 class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -44,21 +47,19 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     @IBAction func ajouterAction(_ sender: Any) {
-        // Core Data
-         context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-         
-        // ListePersonnes.append(Personne.init(nom: qui, date: dateTextField.text!, quoi: quoiTextField.text!, prix: (prix as NSString).doubleValue))
-        let nouvelleActivite = NSEntityDescription.insertNewObject(forEntityName: "Activites", into: context!)
         if prixTextField.text == "" {
             prixTextField.text = "0"
         }
         
+        let newPrix = prixTextField.text?.replacingOccurrences(of: ",", with: ".")
+        let  post :[String: AnyObject] = ["nom": qui as AnyObject,"date":dateTextField.text! as AnyObject,"quoi":quoiTextField.text! as AnyObject,"prix": Double(newPrix!) as AnyObject]
         
-        numberFormatter.locale = Locale(identifier: "fr_FR")
-        let prixDouble = numberFormatter.number(from: prixTextField.text!) as! Double
-        sauvegarde(objet: nouvelleActivite, nom: qui, date: dateTextField.text!, quoi: quoiTextField.text!, prix: prixDouble)
+        let databaseRef = FIRDatabase.database().reference()
+        
+        // post data
+        databaseRef.child("activite").childByAutoId().setValue(post)
+        
         self.dismiss(animated: true, completion: nil)
-    
     }
     
 
@@ -75,9 +76,6 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
         afficheDate()
         quoiTextField.text = choix
-        // on donne la main à la vue sur activitePicker
-        //activitePicker.delegate = self
-        
     }
     
     // MARK - Gestion Activites Picker View
