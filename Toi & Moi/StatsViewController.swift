@@ -51,273 +51,64 @@ class StatsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        toiLabel.text = toi
-        moiLabel.text = moi
-        activite1Label.text = activite[0]
-        activite2Label.text = activite[1]
-        activite3Label.text = activite[2]
-        activite4Label.text = activite[3]
-        activite5Label.text = activite[4]
-        activite6Label.text = activite[5]
-        activite7Label.text = activite[6]
-        activite8Label.text = activite[7]
-        activite9Label.text = activite[8]
-        activite10Label.text = activite[9]
-        
-        miseAjourTotal()
         
     }
-    
-    func miseAjourTotal() {
+
+    override func viewDidAppear(_ animated: Bool) {
         
         var totalActiviteToi:Double = 0
         var totalActiviteMoi:Double = 0
         var GtotalToi:Double = 0
         var GtotalMoi:Double = 0
         
-        print("toi: \(toi), Moi: \(moi)")
-        if posts.count > 0 {
-            // Stats Toi
-            for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[0] {
-                    print("Compare '\(posts[i].quoi)'  '\(activite[0])'")
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                    print("\(i) \(posts[i].prix) \(totalActiviteToi) \(GtotalToi)")
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot1TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-            
-            
-            for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[1] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot2TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-            
-            
-            for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[2] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot3TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-                        for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[3] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot4TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-                        for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[4] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot5TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-                        for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[5] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot6TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-                        for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[6] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot7TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-                       for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[7] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot8TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-                       for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[8] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot9TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            totalActiviteToi = 0
-                       for i in 0..<posts.count {
-                if posts[i].nom == toi && posts[i].quoi == activite[9] {
-                    totalActiviteToi += posts[i].prix
-                    GtotalToi = totalActiviteToi
-                }
-            }
-            if totalActiviteToi != 0 {
-                tot10TLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
-            }
-            
-            // Stats Moi
-            
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[0] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot1MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[1] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot2MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[2] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot3MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[3] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot4MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[4] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot5MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[5] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot6MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[6] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot7MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[7] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot8MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[8] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot9MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            totalActiviteMoi = 0
-            for i in 0..<posts.count {
-                if posts[i].nom == moi && posts[i].quoi == activite[9] {
-                    totalActiviteMoi += posts[i].prix
-                    GtotalMoi = totalActiviteMoi
-                    
-                }
-            }
-            if totalActiviteMoi != 0 {
-                tot10MLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
-            }
-            
+        
+        // On affiche le  paramètrage de toi et moi
+        toiLabel.text = toi
+        moiLabel.text = moi
+        
+        
+        // On affiche les activités
+        for i in 0 ... 9 {
+            let leLabel = view.viewWithTag(i+1) as! UILabel
+            leLabel.text = activite[i]
         }
         
-        GTotTLabel.text = NSString(format:"%.2f€", GtotalToi) as String
-        GTotMLabel.text = NSString(format:"%.2f€", GtotalMoi) as String
-        
+        //on affiche le total des activités
+        if posts.count > 0 {
+            
+            // on affiche pour chaque activté
+            for j in 0 ... 9 {
+                
+                // on affiche les activités de Toi
+                for i in 0 ... posts.count - 1 {
+                    
+                    if posts[i].nom == toi && posts[i].quoi == activite[j] {
+                        
+                        let leLabel = view.viewWithTag(j + 11) as! UILabel
+                        totalActiviteToi += posts[i].prix
+                        leLabel.text = NSString(format:"%.2f€", totalActiviteToi) as String
+                                            }
+                }
+                GtotalToi += totalActiviteToi
+
+                GTotTLabel.text = NSString(format:"%.2f€", GtotalToi) as String
+                totalActiviteToi = 0
+                
+                // on affiche les activités de Moi
+                for i in 0 ... posts.count - 1 {
+                    
+                    if posts[i].nom == moi && posts[i].quoi == activite[j] {
+                        
+                        let leLabel = view.viewWithTag(j + 21) as! UILabel
+                        totalActiviteMoi += posts[i].prix
+                        leLabel.text = NSString(format:"%.2f€", totalActiviteMoi) as String
+                    }
+                }
+                GtotalMoi += totalActiviteMoi
+                
+                GTotMLabel.text = NSString(format:"%.2f€", GtotalMoi) as String
+                totalActiviteMoi = 0
+            }
+        }
     }
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 import FirebaseDatabase
 import Firebase
 
@@ -112,6 +111,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let  post :[String: AnyObject] = ["nom": nom as AnyObject,"date":date as AnyObject,"quoi":quoi as AnyObject,"prix":prix as AnyObject]
         
+        // Firebase
         let databaseRef = FIRDatabase.database().reference()
         
         // post data
@@ -129,6 +129,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         let nextAction = UIAlertAction(title: "Oui", style: .default) { action -> Void in
+            
+            // Firebase
+            
             let ref = FIRDatabase.database().reference()
             ref.child("activite").removeValue()
             posts.removeAll()
@@ -144,6 +147,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         self.present(alertController, animated: true, completion: nil)
         
+    }
+    
+    @IBAction func findeMoisButton(_ sender: UIBarButtonItem) {
+        let sauveTotalToi = totalToi
+        let sauveTotalMoi = totalMoi
+        
+        
+        let alertController:UIAlertController = UIAlertController(title: "Remise à 0 de fin de mois !", message: "Voulez-vous vraiment faire une remise à 0 et garder la balance ?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Non, annuler", style: .cancel) { action -> Void in
+            // don't do anything
+        }
+        
+        let nextAction = UIAlertAction(title: "Oui", style: .default) { action -> Void in
+            
+            if sauveTotalToi > sauveTotalMoi {
+                totalToi = sauveTotalToi - sauveTotalMoi
+                totalMoi = 0
+            } else {
+                totalMoi = sauveTotalMoi - sauveTotalToi
+                totalToi = 0
+            }
+            
+            self.totToiLabel.text = NSString(format:"%.2f€", totalToi) as String
+            self.totMoiLabel.text = NSString(format:"%.2f€", totalMoi) as String
+            
+            self.maTableView.reloadData()
+        }
+        
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(nextAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+
     }
     
     func miseAjourTotal() {
@@ -168,8 +207,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return $0 + $1.prix
         })
         
-        nbToiLabel.text = "\(postMoi.count)"
-        nbMoiLabel.text = "\(postToi.count)"
+        nbToiLabel.text = "\(postToi.count)"
+        nbMoiLabel.text = "\(postMoi.count)"
      
         totToiLabel.text = NSString(format:"%.2f€", totalToi) as String
         totMoiLabel.text = NSString(format:"%.2f€", totalMoi) as String
@@ -178,16 +217,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     // MARK - Gestion de la TableView
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     
@@ -199,10 +231,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // affiche la cellule
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:TableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
-        //let task = tasks[indexPath.row]
         let post = posts[indexPath.row]
-        print (post)
-//        cell.affiche(task: task)
+        // print (post)
         cell.affiche2(post: post)
         return cell
     }
@@ -255,65 +285,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         toiTitre.text = toi
         moiTitre.text = moi
         
-         if let activiteSetup = defaults.string(forKey: "activite_0") {
-         activite[0]  = activiteSetup
-         } else {
-         activite[0]  = ""
-         }
-    
-         if let activiteSetup = defaults.string(forKey: "activite_1") {
-         activite[1]  = activiteSetup
-         } else {
-         activite[1]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_2") {
-         activite[2]  = activiteSetup
-         } else {
-         activite[2]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_3") {
-         activite[3]  = activiteSetup
-         } else {
-         activite[3]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_4") {
-         activite[4]  = activiteSetup
-         } else {
-         activite[4]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_5") {
-         activite[5]  = activiteSetup
-         } else {
-         activite[5]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_6") {
-         activite[6]  = activiteSetup
-         } else {
-         activite[6]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_7") {
-         activite[7]  = activiteSetup
-         } else {
-         activite[7]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_8") {
-         activite[8]  = activiteSetup
-         } else {
-         activite[8]  = ""
-         }
-         
-         if let activiteSetup = defaults.string(forKey: "activite_9") {
-         activite[9]  = activiteSetup
-         } else {
-         activite[9]  = ""
-         }
+        
+        for i in 0 ... 9 {
+            if let activiteSetup = defaults.string(forKey: "activite_\(i)") {
+                activite[i]  = activiteSetup
+            } else {
+                activite[i]  = ""
+            }
+        }
     }
     
     func defaultsChanged(){
