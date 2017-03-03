@@ -49,19 +49,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // Récupération des settings
         
-        func registerSettings() {
-            let appDefaults = [String:AnyObject]()
-            UserDefaults.standard.register(defaults: appDefaults)
-            UserDefaults.standard.synchronize()
-        }
         
-        registerSettings()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        func registerSettings() {
+            let appDefaults = [String:AnyObject]()
+            UserDefaults.standard.register(defaults: appDefaults)
+            //UserDefaults.standard.synchronize()
+        }
+
+        registerSettings()
+
         updateDisplayFromDefaults()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.updateDisplayFromDefaults), name: UserDefaults.didChangeNotification, object: nil)
         
         FIRApp.configure()
         let databaseRef = FIRDatabase.database().reference()
