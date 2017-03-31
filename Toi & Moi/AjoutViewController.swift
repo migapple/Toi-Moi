@@ -11,7 +11,7 @@ import CoreData
 import Firebase
 import FirebaseDatabase
 
-var activite = ["Restau", "Ciné","Courses","","","","","","",""]
+//var activite = ["Restau", "Ciné","Courses","","","","","","",""]
 
 class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -81,7 +81,7 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     // MARK - Gestion Activites Picker View
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return activite[row]
+        return activiteSetting[row]
         
     }
     
@@ -94,11 +94,11 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     // returns the # of rows in each component..
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-          return activite.count
+          return activiteSetting.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        choix = activite[row]
+        choix = activiteSetting[row]
         quoiTextField.text = choix
     }
     

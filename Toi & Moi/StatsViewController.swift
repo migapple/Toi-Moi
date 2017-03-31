@@ -10,8 +10,6 @@ import UIKit
 
 class StatsViewController: UIViewController {
     
-    var posts = [postStuct]()
-
     @IBOutlet weak var toiLabel: UILabel!
     @IBOutlet weak var moiLabel: UILabel!
     @IBOutlet weak var activite1Label: UILabel!
@@ -69,9 +67,11 @@ class StatsViewController: UIViewController {
         
         
         // On affiche les activités
+        
+        
         for i in 0 ... 9 {
             let leLabel = view.viewWithTag(i+1) as! UILabel
-            leLabel.text = activite[i]
+            leLabel.text = activiteSetting[i]
         }
         
         //on affiche le total des activités
@@ -80,10 +80,10 @@ class StatsViewController: UIViewController {
             // on affiche pour chaque activté
             for j in 0 ... 9 {
                 
-                // on affiche les activités de Toi
+                // on affiche les posts de Toi
                 for i in 0 ... posts.count - 1 {
                     
-                    if posts[i].nom == toi && posts[i].quoi == activite[j] {
+                    if posts[i].nom == toi && posts[i].quoi == activiteSetting[j] {
                         
                         let leLabel = view.viewWithTag(j + 11) as! UILabel
                         totalActiviteToi += posts[i].prix
@@ -95,10 +95,10 @@ class StatsViewController: UIViewController {
                 GTotTLabel.text = NSString(format:"%.2f€", GtotalToi) as String
                 totalActiviteToi = 0
                 
-                // on affiche les activités de Moi
+                // on affiche les posts de Moi
                 for i in 0 ... posts.count - 1 {
                     
-                    if posts[i].nom == moi && posts[i].quoi == activite[j] {
+                    if posts[i].nom == moi && posts[i].quoi == activiteSetting[j] {
                         
                         let leLabel = view.viewWithTag(j + 21) as! UILabel
                         totalActiviteMoi += posts[i].prix

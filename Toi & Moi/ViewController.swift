@@ -26,12 +26,14 @@ var databaseHandle:FIRDatabaseHandle?
 
 var postData = [String:AnyObject]()
 var posts = [postStuct]()
+var activites = [String]()
 
 var prixToi: [Double] = []
 var prixMoi: [Double] = []
 var totalToi:Double = 0
 var totalMoi:Double = 0
 
+var activiteSetting = ["Restau","Ciné","Courses","","","","","","",""]
 
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -62,6 +64,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         updateDisplayFromDefaults()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
         
         FIRApp.configure()
         let databaseRef = FIRDatabase.database().reference()
@@ -162,18 +166,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let nextAction = UIAlertAction(title: "Oui", style: .default) { action -> Void in
             
+            // On calcule le report
+            var total = 0.0
+            var qui = ""
             if sauveTotalToi > sauveTotalMoi {
                 totalToi = sauveTotalToi - sauveTotalMoi
                 totalMoi = 0
+                qui = toi
+                total = totalToi
             } else {
                 totalMoi = sauveTotalMoi - sauveTotalToi
                 totalToi = 0
+                qui = moi
+                total = totalMoi
             }
+            
+            let quoi = "Report"
+            
+            // On recupere la date
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = NSLocale(localeIdentifier: "fr_FR") as Locale!
+            dateFormatter.dateFormat = "EEE dd/MM/yy HH:mm"
+            let ladate = dateFormatter.string(from: Date())
+            
+            // Firebase on efface la base
+            
+            let ref = FIRDatabase.database().reference()
+            ref.child("activite").removeValue()
+            posts.removeAll()
+            prixToi = []
+            prixMoi = []
+        
+            // Firebase on ajoute le report
+            let  post :[String: AnyObject] = ["nom": qui as AnyObject,"date": ladate as AnyObject,"quoi":quoi as AnyObject,"prix": total as AnyObject]
+            
+            let databaseRef = FIRDatabase.database().reference()
+            databaseRef.child("activite").childByAutoId().setValue(post)
             
             self.totToiLabel.text = NSString(format:"%.2f€", totalToi) as String
             self.totMoiLabel.text = NSString(format:"%.2f€", totalMoi) as String
             
             self.maTableView.reloadData()
+            self.miseAjourTotal()
+
         }
         
         
@@ -282,15 +317,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             toi  = ""
         }
         
+        //Set the controls to the default values.
+        
+        if let activiteSetup = defaults.string(forKey: "moi_0") {
+            moi = String(activiteSetup.characters.prefix(3)).uppercased()
+            moi = moi.padding(toLength: 3, withPad: " ", startingAt: 0)
+        }
+        
+        if let activiteSetup = defaults.string(forKey: "toi_0") {
+            toi  = String(activiteSetup.characters.prefix(3)).uppercased()
+            toi = toi.padding(toLength: 3, withPad: " ", startingAt: 0)
+        }
+
         toiTitre.text = toi
         moiTitre.text = moi
         
         
         for i in 0 ... 9 {
             if let activiteSetup = defaults.string(forKey: "activite_\(i)") {
-                activite[i]  = activiteSetup
+                activiteSetting[i]  = activiteSetup
             } else {
-                activite[i]  = ""
+                activiteSetting[i]  = ""
             }
         }
     }
@@ -318,10 +365,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //            viewVC.activite = activite
         //        }
         
-                if segue.identifier == "Statistiques" {
-                    let viewVC = segue.destination as! StatsViewController
-                    viewVC.posts = posts
-                }
+//                if segue.identifier == "Statistiques" {
+//                    let viewVC = segue.destination as! StatsViewController
+//                    viewVC.posts = posts
+//                }
     }
 }
 
