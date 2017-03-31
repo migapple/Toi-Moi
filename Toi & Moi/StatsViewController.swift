@@ -10,6 +10,7 @@ import UIKit
 
 class StatsViewController: UIViewController {
     
+    var posts = [postStuct]()
 
     @IBOutlet weak var toiLabel: UILabel!
     @IBOutlet weak var moiLabel: UILabel!

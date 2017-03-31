@@ -299,6 +299,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         updateDisplayFromDefaults()
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        //        if segue.identifier == "Ajouter" {
+        //            let viewVC = segue.destination as! AjoutViewController
+        //            viewVC.isEditing = false
+        //            viewVC.activites = activites
+        //            viewVC.delegate = self
+        //            viewVC.maTableView = self.maTableView
+        //        }
+        //
+        //        if segue.identifier == "Modifier" {
+        //            let viewVC = segue.destination as! AjoutViewController
+        //            viewVC.isEditing = true
+        //            viewVC.delegate = self
+        //            let indexPath = maTableView.indexPathForSelectedRow
+        //            let activite = activites[(indexPath?.row)!] as CKRecord
+        //            viewVC.activite = activite
+        //        }
+        
+                if segue.identifier == "Statistiques" {
+                    let viewVC = segue.destination as! StatsViewController
+                    viewVC.posts = posts
+                }
+    }
 }
 
