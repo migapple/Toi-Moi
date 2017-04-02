@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		13CAF6451375FDF52A174033 /* Pods_Toi___Moi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA4B11E8E744695C46AA516 /* Pods_Toi___Moi.framework */; };
 		53799F741E4A10B700E904C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53799F731E4A10B700E904C7 /* GoogleService-Info.plist */; };
-		5399F92A1E4D95710098FD39 /* Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5399F9291E4D95710098FD39 /* Print.swift */; };
 		539AD2FB1E2FD839008D3F67 /* AjoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539AD2FA1E2FD839008D3F67 /* AjoutViewController.swift */; };
 		53A12E851E3A32D40017EB6A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53A12E841E3A32D40017EB6A /* Settings.bundle */; };
 		53A12E891E3A66E50017EB6A /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A12E881E3A66E50017EB6A /* StatsViewController.swift */; };
@@ -27,7 +26,6 @@
 		4A800176303901FD8728FBD0 /* Pods-Toi & Moi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Toi & Moi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Toi & Moi/Pods-Toi & Moi.release.xcconfig"; sourceTree = "<group>"; };
 		4EA4B11E8E744695C46AA516 /* Pods_Toi___Moi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_Toi___Moi.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53799F731E4A10B700E904C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		5399F9291E4D95710098FD39 /* Print.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Print.swift; sourceTree = "<group>"; };
 		539AD2FA1E2FD839008D3F67 /* AjoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AjoutViewController.swift; sourceTree = "<group>"; };
 		53A12E841E3A32D40017EB6A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		53A12E881E3A66E50017EB6A /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 				539AD2FA1E2FD839008D3F67 /* AjoutViewController.swift */,
 				53D483521E2F7E100026B32C /* TableViewCell.swift */,
 				53A12E881E3A66E50017EB6A /* StatsViewController.swift */,
-				5399F9291E4D95710098FD39 /* Print.swift */,
 				53D483441E2F67760026B32C /* Main.storyboard */,
 				53D483471E2F67760026B32C /* Assets.xcassets */,
 				53D483491E2F67760026B32C /* LaunchScreen.storyboard */,
@@ -241,7 +238,6 @@
 				53D483531E2F7E100026B32C /* TableViewCell.swift in Sources */,
 				53D483431E2F67760026B32C /* ViewController.swift in Sources */,
 				53D483411E2F67760026B32C /* AppDelegate.swift in Sources */,
-				5399F92A1E4D95710098FD39 /* Print.swift in Sources */,
 				53FAB8241E3497A80007ADCE /* Model.xcdatamodeld in Sources */,
 				53A12E891E3A66E50017EB6A /* StatsViewController.swift in Sources */,
 				53E817401E42426600D113E3 /* AideViewController.swift in Sources */,

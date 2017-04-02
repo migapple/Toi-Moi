@@ -84,21 +84,16 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         //self.dismiss(animated: true, completion: nil)
     }
     
-func isStringAnInt(stringNumber: String) -> Bool {
     
-    if let _ = Int(stringNumber) {
-        return true
-    }
-    return false
-}
-
     func ajouter() {
         if prixTextField.text == "" {
             prixTextField.text = "0"
         }
         
+        // On remplace la virgule par un point
         let newPrix = prixTextField.text?.replacingOccurrences(of: ",", with: ".")
         
+        // On verifie que l'on a rentré une somme sinon alerte
         if (Float(newPrix!) != nil) {
             let  post :[String: AnyObject] = ["nom": qui as AnyObject,"date":dateTextField.text! as AnyObject,"quoi":quoiTextField.text! as AnyObject,"prix": Double(newPrix!) as AnyObject]
             
@@ -119,11 +114,12 @@ func isStringAnInt(stringNumber: String) -> Bool {
         }
     }
     
-    @IBAction func annulerAction(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-        
-    }
+//    @IBAction func annulerAction(_ sender: Any) {
+//        self.dismiss(animated: true, completion: nil)
+//        
+//    }
     
+    // Si on est en mode modification on doit afficher le post à modifier
     func modifSaisie() {
         if let qui = post?.nom {
             if qui == moi {
@@ -146,6 +142,7 @@ func isStringAnInt(stringNumber: String) -> Bool {
         }
     }
     
+    // On fait la modification
     func modification() {
         switch self.quiSegmentedControl.selectedSegmentIndex
         {
@@ -171,7 +168,7 @@ func isStringAnInt(stringNumber: String) -> Bool {
         
         
         
-        let childUpdates = ["/activite/\(key)": dictionaryTodo]
+        let childUpdates = ["/activite/\(String(describing: key))": dictionaryTodo]
         databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, ref) -> Void in
             self.navigationController?.popViewController(animated: true)
         })
@@ -202,7 +199,7 @@ func isStringAnInt(stringNumber: String) -> Bool {
         quoiTextField.text = choix
     }
     
-    
+    // On affiche la date du jour dans le champ
     func afficheDate() {
         // affiche la date du jour et le met dans le champ dateTextField
         dateFormatter.locale = NSLocale(localeIdentifier: "fr_FR") as Locale!

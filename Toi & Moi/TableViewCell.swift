@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Paramétrage de la Custom Cell
 class TableViewCell: UITableViewCell {
     @IBOutlet weak var quiLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -24,7 +25,7 @@ class TableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func affiche2(post:postStuct)  {
+    func affiche(post:postStuct)  {
         quiLabel.text = post.nom
         dateLabel.text = post.date
         quoiLabel.text = post.quoi

@@ -36,7 +36,6 @@ var totalMoi:Double = 0
 
 var activiteSetting = ["Restau","Ciné","Courses","","","","","","",""]
 
-
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var nbToiLabel: UILabel!
@@ -61,7 +60,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         registerSettings()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,13 +86,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
-
+            
             
             // posts.insert(postStuct(nom: nom!, date: date!, quoi: quoi!, prix: prix!,uniqueUserID: uniqueUserID), at: 0)
-             self.chargePosts(nom: nom!, date: date!, quoi: quoi!, prix: prix!, uniqueUserID: uniqueUserID)
+            self.chargePosts(nom: nom!, date: date!, quoi: quoi!, prix: prix!, uniqueUserID: uniqueUserID)
         })
     }
     
+    // On charge les posts
     func chargePosts(nom: String, date: String, quoi: String, prix: Double, uniqueUserID: String) {
         posts.insert(postStuct(nom: nom, date: date, quoi: quoi, prix: prix,uniqueUserID: uniqueUserID), at: 0)
         
@@ -104,10 +104,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if (nom == moi) {
             prixMoi.insert(prix, at: 0)
         }
-
+        
         miseAjourTotal()
-   }
-   
+    }
+    
+    // Utilise pour les tests
     func post() {
         
         let nom = "MIG"
@@ -123,11 +124,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // post data
         databaseRef.child("activite").childByAutoId().setValue(post)
     }
-
     
+    // Effacement de toutes les données
     @IBAction func trashButton(_ sender: UIBarButtonItem) {
-        
-        
         let alertController:UIAlertController = UIAlertController(title: "Supression des données !", message: "Voulez-vous vraiment supprimer toutes les données ?", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Non, annuler", style: .cancel) { action -> Void in
@@ -146,7 +145,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             self.maTableView.reloadData()
             self.miseAjourTotal()
-         }
+        }
         
         alertController.addAction(cancelAction)
         alertController.addAction(nextAction)
@@ -155,6 +154,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    // Balance de mois
     @IBAction func findeMoisButton(_ sender: UIBarButtonItem) {
         let sauveTotalToi = totalToi
         let sauveTotalMoi = totalMoi
@@ -198,7 +198,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             posts.removeAll()
             prixToi = []
             prixMoi = []
-        
+            
             // Firebase on ajoute le report
             let  post :[String: AnyObject] = ["nom": qui as AnyObject,"date": ladate as AnyObject,"quoi":quoi as AnyObject,"prix": total as AnyObject]
             
@@ -210,7 +210,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             self.maTableView.reloadData()
             self.miseAjourTotal()
-
+            
         }
         
         
@@ -220,13 +220,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // Mise a jour des totaux
     func miseAjourTotal() {
         
         // on filtre les TOI
         let postToi = posts.filter { (postStuct:postStuct) -> Bool in
             return postStuct.nom == toi
         }
-
+        
         // on totalise les TOI
         totalToi = postToi.reduce(0, {
             return $0 + $1.prix
@@ -247,7 +248,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let postToiR = postToi.filter { (postStuct:postStuct) -> Bool in
             return postStuct.quoi != "-Report-"
         }
-       
+        
         // on filtre les MOI
         let postMoiR = postMoi.filter { (postStuct:postStuct) -> Bool in
             return postStuct.quoi != "-Report-"
@@ -255,13 +256,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         nbToiLabel.text = "\(postToiR.count)"
         nbMoiLabel.text = "\(postMoiR.count)"
-     
+        
         totToiLabel.text = NSString(format:"%.2f€", totalToi) as String
         totMoiLabel.text = NSString(format:"%.2f€", totalMoi) as String
-
+        
         self.maTableView.reloadData()
     }
-
+    
     
     // MARK - Gestion de la TableView
     
@@ -271,7 +272,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // Calcule le nombre de lignes à afficher
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          return posts.count
+        return posts.count
     }
     
     // affiche la cellule
@@ -279,7 +280,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell:TableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
         let post = posts[indexPath.row]
         // print (post)
-        cell.affiche2(post: post)
+        cell.affiche(post: post)
         return cell
     }
     
@@ -304,11 +305,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
-
-            miseAjourTotal()
-            maTableView.reloadData()
+        miseAjourTotal()
+        maTableView.reloadData()
     }
     
+    // Modification du fond en fonction de l'utilisateur
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
         if post.nom == toi && post.quoi != "-Report-" {
@@ -324,13 +325,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    
+    // Récupere les parametres du Setup
     func updateDisplayFromDefaults(){
         
-         //Get the defaults
-         let defaults = UserDefaults.standard
-         
-         //Set the controls to the default values.
+        //Get the defaults
+        let defaults = UserDefaults.standard
+        
+        //Set the controls to the default values.
         
         if let activiteSetup = defaults.string(forKey: "moi_0") {
             moi  = activiteSetup
@@ -354,7 +355,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             toi  = String(activiteSetup.characters.prefix(3)).uppercased()
             toi = toi.padding(toLength: 3, withPad: " ", startingAt: 0)
         }
-
+        
         toiTitre.text = toi
         moiTitre.text = moi
         
@@ -368,33 +369,35 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    // Utilisé si on change un parametre de setting
     func defaultsChanged(){
         updateDisplayFromDefaults()
     }
     
+    // On change de vue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-                if segue.identifier == "AjouterSegue" {
-                    let viewVC = segue.destination as! AjoutViewController
-                    viewVC.isEditing = false
-//                    viewVC.activites = activites
-//                    viewVC.delegate = self
-//                    viewVC.maTableView = self.maTableView
-                }
+        if segue.identifier == "AjouterSegue" {
+            let viewVC = segue.destination as! AjoutViewController
+            viewVC.isEditing = false
+            //                    viewVC.activites = activites
+            //                    viewVC.delegate = self
+            //                    viewVC.maTableView = self.maTableView
+        }
         
-                if segue.identifier == "ModifierSegue" {
-                    let viewVC = segue.destination as! AjoutViewController
-                    viewVC.isEditing = true
-//                    viewVC.delegate = self
-                    let indexPath = maTableView.indexPathForSelectedRow
-                    let post = posts[(indexPath?.row)!]
-                    viewVC.post = post
-                }
+        if segue.identifier == "ModifierSegue" {
+            let viewVC = segue.destination as! AjoutViewController
+            viewVC.isEditing = true
+            //                    viewVC.delegate = self
+            let indexPath = maTableView.indexPathForSelectedRow
+            let post = posts[(indexPath?.row)!]
+            viewVC.post = post
+        }
         
-//                if segue.identifier == "Statistiques" {
-//                    let viewVC = segue.destination as! StatsViewController
-//                    viewVC.posts = posts
-//                }
+        //                if segue.identifier == "Statistiques" {
+        //                    let viewVC = segue.destination as! StatsViewController
+        //                    viewVC.posts = posts
+        //                }
     }
 }
 
