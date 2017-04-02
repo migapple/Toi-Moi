@@ -14,11 +14,11 @@ var toi:String = ""
 var moi:String = ""
 
 struct postStuct {
-    let nom:String
-    let date:String
-    let quoi:String
-    let prix:Double
-    let uniqueUserID:String
+    var nom:String
+    var date:String
+    var quoi:String
+    var prix:Double
+    var uniqueUserID:String
 }
 
 var ref:FIRDatabaseReference?
@@ -26,6 +26,7 @@ var databaseHandle:FIRDatabaseHandle?
 
 var postData = [String:AnyObject]()
 var posts = [postStuct]()
+var post: postStuct?
 var activites = [String]()
 
 var prixToi: [Double] = []
@@ -45,6 +46,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var toiTitre: UILabel!
     @IBOutlet weak var moiTitre: UILabel!
     @IBOutlet weak var maTableView: UITableView!
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -216,8 +218,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         alertController.addAction(nextAction)
         
         self.present(alertController, animated: true, completion: nil)
-        
-
     }
     
     func miseAjourTotal() {
@@ -242,8 +242,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return $0 + $1.prix
         })
         
-        nbToiLabel.text = "\(postToi.count)"
-        nbMoiLabel.text = "\(postMoi.count)"
+        // on filtre sans le report
+        // on filtre les TOI
+        let postToiR = postToi.filter { (postStuct:postStuct) -> Bool in
+            return postStuct.quoi != "-Report-"
+        }
+       
+        // on filtre les MOI
+        let postMoiR = postMoi.filter { (postStuct:postStuct) -> Bool in
+            return postStuct.quoi != "-Report-"
+        }
+        
+        nbToiLabel.text = "\(postToiR.count)"
+        nbMoiLabel.text = "\(postMoiR.count)"
      
         totToiLabel.text = NSString(format:"%.2f€", totalToi) as String
         totMoiLabel.text = NSString(format:"%.2f€", totalMoi) as String
@@ -298,6 +309,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             maTableView.reloadData()
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        if post.nom == toi && post.quoi != "-Report-" {
+            cell.contentView.backgroundColor = UIColor.yellow
+        }
+        
+        if post.nom == moi && post.quoi != "-Report-" {
+            cell.contentView.backgroundColor = UIColor.green
+        }
+        
+        if post.quoi == "-Report-" {
+            cell.contentView.backgroundColor = UIColor.red
+        }
+    }
+    
     
     func updateDisplayFromDefaults(){
         
@@ -348,22 +374,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        //        if segue.identifier == "Ajouter" {
-        //            let viewVC = segue.destination as! AjoutViewController
-        //            viewVC.isEditing = false
-        //            viewVC.activites = activites
-        //            viewVC.delegate = self
-        //            viewVC.maTableView = self.maTableView
-        //        }
-        //
-        //        if segue.identifier == "Modifier" {
-        //            let viewVC = segue.destination as! AjoutViewController
-        //            viewVC.isEditing = true
-        //            viewVC.delegate = self
-        //            let indexPath = maTableView.indexPathForSelectedRow
-        //            let activite = activites[(indexPath?.row)!] as CKRecord
-        //            viewVC.activite = activite
-        //        }
+                if segue.identifier == "AjouterSegue" {
+                    let viewVC = segue.destination as! AjoutViewController
+                    viewVC.isEditing = false
+//                    viewVC.activites = activites
+//                    viewVC.delegate = self
+//                    viewVC.maTableView = self.maTableView
+                }
+        
+                if segue.identifier == "ModifierSegue" {
+                    let viewVC = segue.destination as! AjoutViewController
+                    viewVC.isEditing = true
+//                    viewVC.delegate = self
+                    let indexPath = maTableView.indexPathForSelectedRow
+                    let post = posts[(indexPath?.row)!]
+                    viewVC.post = post
+                }
         
 //                if segue.identifier == "Statistiques" {
 //                    let viewVC = segue.destination as! StatsViewController
