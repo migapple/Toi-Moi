@@ -28,7 +28,7 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
 
     @IBAction func modiferDatePicker(_ sender: Any) {
-        dateTextField.text = dateFormatter.string(for: monDatePicker.date)
+         dateTextField.text = dateFormatter.string(for: monDatePicker.date)
     }
     
     @IBAction func quiSegmentedControlAction(_ sender: Any) {
@@ -69,6 +69,8 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        monDatePicker.locale = Locale(identifier: "fr_FR")
+
         afficheDate()
         quoiTextField.text = choix
         // on donne la main à la vue sur activitePicker
@@ -103,7 +105,7 @@ class AjoutViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
     func afficheDate() {
         // affiche la date du jour et le met dans le champ dateTextField
-        dateFormatter.locale = NSLocale(localeIdentifier: "fr_FR") as Locale!
+        dateFormatter.locale = NSLocale(localeIdentifier: "fr_FR") as Locale
         dateFormatter.dateFormat = "EEE dd/MM/yy HH:mm"
         dateTextField.text = dateFormatter.string(from: monDatePicker.date)
     }

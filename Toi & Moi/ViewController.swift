@@ -163,7 +163,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     // Suppression d'une ligne
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         if editingStyle == .delete {
             let task = tasks[indexPath.row]
@@ -191,7 +191,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //NSUserDefaults.standardUserDefaults().synchronize()
     }
     
-    func updateDisplayFromDefaults(){
+    @objc func updateDisplayFromDefaults(){
         
 
          //Get the defaults
